@@ -71,12 +71,6 @@ function clickToControl(e) {
 	info.update(e.target);
 }
 
-//reset
-function reset60Day(e) {
-  console.log("reset60Day fired");
-  console.log(wellLayer);
-  day60Layer.resetStyle(wellLayer);
-}
 
 //updating the control
 info.update = function(props) {
