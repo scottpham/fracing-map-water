@@ -17,25 +17,26 @@ L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
 }).addTo(map);
 
+//size function
+//function getSize(d){
+//	return d > 50520229 ? 30 :
+//		d > 4994335.25 ? 25 :
+//		d > 1797653 ? 20 :
+//		d > 1101964.25 ? 15 :
+//		10;	
+//}
 
-//getcolor function
-function getColor(d){
-  return d.URL ? "green" : "yellow";
-}
-
-
-//day60Style
+//layer style
 function wellStyle(feature) {
   return {
-    radius: 8,
-    //fillColor: getColor(feature.properties),
+    radius: 18,
+//	radius: getSize(feature.properties.water_injected),
     fillColor: "steelblue",
-    color:"black",
+    color:"lightgrey",
     weight: 1.5,
     opacity: 1,
-    fillOpacity: 0.75
+    fillOpacity: 0.65
   };
-  
 }
 
 //bind click function to layer
@@ -60,7 +61,7 @@ info.onAdd = function (map) {
 //sends click event to update control
 function clickToControl(e) {
 	var layer = e.target;
-	wellLayer.setStyle({color: "black", fillOpacity: 0.5});
+	wellLayer.setStyle({color: "lightgrey", fillOpacity: 0.5});
 	e.target.popup
 	layer.setStyle({color: "red", fillOpacity: 1}); //highlight color
 	info.update(e.target);
@@ -75,14 +76,12 @@ function numberWithCommas(x) {
 
 //updating the control
 info.update = function(data) {
-	this._div.innerHTML = (data ? '<p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p>' : "<h5>Click a circle marker</h5>");
+	this._div.innerHTML = (data ? '<p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p>' : "<h5><strong>Click a circle marker</strong></h5>");
 };
 
 info.addTo(map);
 
-
  //end control code//////////
-
 function findlocation(e) {
 	console.log("The lat and long is " + e.latlng);
 } 
