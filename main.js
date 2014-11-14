@@ -1,6 +1,6 @@
 var wellLayer= L.geoJson(wellLocations, {
   style: wellStyle,
-  onEachFeature: onEach60day,
+  onEachFeature: onEachWell,
   pointToLayer: function(feature,latlng){
     return L.circleMarker(latlng, null); //null options.  used style instead
   }
@@ -10,13 +10,8 @@ var wellLayer= L.geoJson(wellLocations, {
 var map = L.map('map', {
 	scrollWheelZoom: false,
 	layers: [wellLayer]
-	}).setView([35.1, -118.7], 9);
+	}).setView([35.4, -118.7], 9);
 	
-	
-//map tile from mapbox
-// L.mapbox.tileLayer('nbclocal.ibn9m1lj', {
-// attribution: 'Tiles from MapBox| Data from FracFocus.'
-// }).addTo(map);
 
 L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
@@ -44,7 +39,7 @@ function wellStyle(feature) {
 }
 
 //bind click function to layer
-function onEach60day(feature, layer) {
+function onEachWell(feature, layer) {
 	layer.on({
 		click: clickToControl
 	});
@@ -94,14 +89,3 @@ function findlocation(e) {
 
 //instantiate helper finder function
 map.on('click', findlocation);
-
-//legend start//
-// var legend = L.control({position: 'topright'});
-
-// legend.onAdd = function(map) {
-// var div = L.DomUtil.create('div', 'info legend');
-// div.innerHTML = '<i style="background: green;"></i>' + '= On DOGGR' + '<br/> <i style="background: yellow;"></i> = Missing from DOGGR';
-// 	return div; 
-// };
-
-//legend.addTo(map);
