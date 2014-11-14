@@ -1,3 +1,4 @@
+
 var wellLayer= L.geoJson(wellLocations, {
   style: wellStyle,
   onEachFeature: onEachWell,
@@ -76,15 +77,33 @@ function numberWithCommas(x) {
 
 //updating the control
 info.update = function(data) {
-	this._div.innerHTML = (data ? '<p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p>' : "<h5><strong>Click a circle marker</strong></h5>");
+	var that = this; //passing scope
+
+	this._div.innerHTML = (data ? '<div class="target-info"><p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p></div><div id="slide-control"><span class="slide-up glyphicon glyphicon-chevron-up"></span><span class="slide-down glyphicon glyphicon-chevron-down"></span></div>' : "<h5><strong>Click a circle marker</strong></h5>");
+
+
+	//have to put this function here or won't render right
+	$(document).ready(function(){
+		$(".slide-up").click(function(){
+		//	that._div.innerHTML = '<strong>Click a circle marker</strong><span class="slide glyphicon glyphicon-chevron-down"></span>'	
+			$(".target-info").slideUp("slow");
+		});
+
+		$(".slide-down").click(function(){
+			$(".target-info").slideDown("slow");
+		});	
+	});
+
+	
 };
 
 info.addTo(map);
 
- //end control code//////////
+/*helper function
 function findlocation(e) {
 	console.log("The lat and long is " + e.latlng);
 } 
 
 //instantiate helper finder function
 map.on('click', findlocation);
+*/
