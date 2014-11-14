@@ -32,11 +32,11 @@ function getColor(d){
 //day60Style
 function wellStyle(feature) {
   return {
-    radius: 10,
+    radius: 8,
     //fillColor: getColor(feature.properties),
     fillColor: "steelblue",
     color:"black",
-    weight: 1,
+    weight: 1.5,
     opacity: 1,
     fillOpacity: 0.75
   };
@@ -71,24 +71,22 @@ function clickToControl(e) {
 	info.update(e.target);
 }
 
+// Cribbed from http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
 
 //updating the control
-info.update = function(props) {
-	this._div.innerHTML = '<h4>Wells</h4>' + (props ? "<p><strong>Well ID: </strong>" + props.feature.id + "</p>" : "<h5>Click a circle marker</h5>");
+info.update = function(data) {
+	this._div.innerHTML = (data ? '<p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p>' : "<h5>Click a circle marker</h5>");
 };
 
-
-//old template
-	// this._div.innerHTML = '<h4>Wells</h4>' + (props ? "<p><strong>Company: </strong>" + props.feature.properties.Company +"</p><p><strong> Well Name: </strong>" + props.feature.properties.Well + "</p><p><strong>Date Tapped: </strong>" + props.feature.properties.Job_Start + "</p>" + (props.feature.properties.URL ? 
-
-
-	// 	"<p><em>More info on <a href = '" + props.feature.properties.URL + "' target='_blank'>DOGGR.</a></em>": "<p><em>Well not recorded by DOGGR.</em></p>") + '<p><small>Accurate as of May 20th, 2014.</small></p>': "<h5>Click a circle marker</h5>"); 
-//instantiating the control
 info.addTo(map);
 
 
  //end control code//////////
-
 
 function findlocation(e) {
 	console.log("The lat and long is " + e.latlng);

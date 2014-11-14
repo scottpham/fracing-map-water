@@ -1,5 +1,4 @@
-var wellLocations = 
-    {
+{
     "type": "FeatureCollection", 
     "bbox": [
         -118.992262, 
@@ -161,4 +160,4 @@ var wellLocations =
             }
         }
     ]
-};
+}
