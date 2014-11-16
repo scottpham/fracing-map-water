@@ -79,13 +79,12 @@ function numberWithCommas(x) {
 info.update = function(data) {
 	var that = this; //passing scope
 
-	this._div.innerHTML = (data ? '<div class="target-info"><p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p></div><div id="slide-control"><span class="slide-up glyphicon glyphicon-chevron-up"></span><span class="slide-down glyphicon glyphicon-chevron-down"></span></div>' : "<h5><strong>Click a circle marker</strong></h5>");
+	this._div.innerHTML = (data ? '<div class="target-info"><p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p></div> <div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>' : "<h5><strong>Click a circle marker</strong></h5>");
 
 
 	//have to put this function here or won't render right
 	$(document).ready(function(){
 		$(".slide-up").click(function(){
-		//	that._div.innerHTML = '<strong>Click a circle marker</strong><span class="slide glyphicon glyphicon-chevron-down"></span>'	
 			$(".target-info").slideUp("slow");
 		});
 
